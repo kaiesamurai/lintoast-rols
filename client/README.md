@@ -1,80 +1,131 @@
-# Getting Started with the Gen-NFT App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Lintoast — Revolutionizing Digital Ownership with Generative NFTs
 
-The application (contract/service) must be deployed on the network, and a Node Service must be running
-on port 8080.
+## Inspiration
 
-Web UIs for specific accounts can be opened by navigating URLs of the form
-`http://localhost:3000/$CHAIN?app=$APP_ID&owner=$OWNER&port=$PORT` where
-- the path is the ID of the chain where the account is located.
-- the argument `app` is the token application ID obtained when creating the token.
-- `owner` is the address of the chosen user account (owner must be have permissions to create blocks in the given chain).
-- `port` is the port of the wallet service (the wallet must know the secret key of `owner`).
+"Lintoast" is born from the vision of leveraging blockchain technology to redefine digital ownership. We saw an opportunity to create a platform where unique digital assets can be minted, transferred, and claimed across different chains, showcasing the potential of the Linera blockchain ecosystem.
 
-## Available Scripts
+## What it does
 
-In the project directory, you can run:
+"Lintoast" enables the creation, management, and cross-chain transfer of non-fungible tokens (NFTs). Key features include:
 
-### `npm start`
+- **Minting NFTs:** Create unique digital assets.
+- **Transferring NFTs:** Move NFTs between accounts on the same or different chains.
+- **Claiming NFTs:** Transfer ownership of NFTs across chains using cross-chain messages.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## How we built it
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Built using the Linera framework and Rust programming language, "Lintoast" combines robust backend capabilities with a seamless frontend experience. Key steps included:
 
-### `npm test`
+1. **Setup Linera Network:** Initialize the local network and configure wallet and storage.
+2. **Compile Application:** Build the application’s WebAssembly binaries.
+3. **Publish Bytecode:** Deploy the application bytecode to the Linera chain.
+4. **Mint and Manage NFTs:** Use the application to create, transfer, and claim NFTs.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Challenges we ran into
 
-### `npm run build`
+Building "Lintoast" involved overcoming several challenges:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Learning Curve:** Mastering Rust’s memory management and concurrency models.
+- **API Integration:** Handling rate limits and errors during API integration.
+- **Security:** Implementing robust authentication and encryption mechanisms.
+- **Deployment:** Managing the unique compilation model of Rust-based applications.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Accomplishments that we're proud of
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Despite the challenges, we achieved:
 
-### `npm run eject`
+- **Advanced Security:** Ensured the safety of user data and digital assets.
+- **Seamless User Experience:** Developed an intuitive interface with positive feedback.
+- **Cross-Chain Transfers:** Enabled smooth transfer and claiming of NFTs across chains.
+- **Real-Time Data:** Integrated real-time market data and updates.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## What we learned
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The development process provided valuable insights:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **Rust Expertise:** Deepened our understanding of Rust’s programming paradigms.
+- **Asynchronous Programming:** Improved handling of asynchronous operations and API integrations.
+- **Cybersecurity:** Enhanced our knowledge of security best practices.
+- **Deployment Strategies:** Learned about deploying Rust-based applications.
+- **Collaboration:** Reinforced the importance of teamwork and iterative development.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## What's next for Lintoast
 
-## Learn More
+Future plans for "Lintoast" include:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Expand Cryptocurrency Support:** Add more cryptocurrencies.
+- **Advanced Trading Features:** Introduce sophisticated trading tools and DeFi integrations.
+- **Mobile Application:** Develop a mobile app for on-the-go NFT management.
+- **Community Engagement:** Enhance social features for a vibrant community.
+- **Educational Resources:** Expand content to educate users about NFTs and blockchain technology.
+- **Strategic Partnerships:** Form alliances with other blockchain projects and ensure regulatory compliance.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Getting Started
 
-### Code Splitting
+### Prerequisites
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Ensure you have the model and tokenizer locally:
 
-### Analyzing the Bundle Size
+```bash
+wget -O model.bin -c https://huggingface.co/karpathy/tinyllamas/resolve/main/stories42M.bin
+wget -c https://huggingface.co/spaces/lmz/candle-llama2/resolve/main/tokenizer.json
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Run the Python server to serve models locally:
 
-### Making a Progressive Web App
+```bash
+python3 -m http.server 10001 &
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Setup
 
-### Advanced Configuration
+Set up your local network and compile the application:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+export PATH="$PWD/target/debug:$PATH"
+source /dev/stdin <<<"$(linera net helper 2>/dev/null)"
+linera_spawn_and_read_wallet_variables linera net up --testing-prng-seed 37
+```
 
-### Deployment
+Compile the application WebAssembly binaries and publish the bytecode:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+(cd examples/gen-nft && cargo build --release)
+BYTECODE_ID=$(linera publish-bytecode \
+    examples/target/wasm32-unknown-unknown/release/gen_nft_{contract,service}.wasm)
+```
 
-### `npm run build` fails to minify
+### Creating an NFT
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Retrieve the application ID and create NFTs:
+
+```bash
+APP_ID=$(linera create-application $BYTECODE_ID)
+```
+
+### Using the NFT Application
+
+Start the node service and access the web frontend:
+
+```bash
+PORT=8080
+linera service --port $PORT &
+cd examples/gen-nft/web-frontend
+npm install --no-save
+BROWSER=none npm start &
+```
+
+Access the application via the provided URLs:
+
+```bash
+echo "http://localhost:3000/$CHAIN_1?app=$APP_ID&owner=$OWNER_1&port=$PORT"
+echo "http://localhost:3000/$CHAIN_1?app=$APP_ID&owner=$OWNER_2&port=$PORT"
+```
+
+## Built With
+
+- **Linera**
+- **Rust**
+
+Explore the world of generative NFTs with "Lintoast" and experience the future of digital asset management!
